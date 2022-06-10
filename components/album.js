@@ -6,11 +6,11 @@ function Album({ name, albumId, isSelected, onClickAlbum, image }) {
 
   return(<div className='album'>
     <label>
-      <span className={isSelected ? '' : 'unselectedAlbum'}>
+      <div className={isSelected ? '' : 'unselectedAlbum'}>
         <Checkbox checked={isSelected}/>
         <input type='checkbox' checked={isSelected} value={albumId} onChange={onClickAlbum}/>
         {name}
-      </span>
+      </div>
       <img src={image} alt={'Album cover of ' + name}/>
     </label>
   </div>)

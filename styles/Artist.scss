@@ -9,6 +9,14 @@
 .album-list {
     padding-bottom: 80px;
     flex-grow: 1;
+
+    h4 {
+        margin: 16px 8px;
+    }
+
+    h4.error {
+        color: #ec3b3b;
+    }
 }
 
 .button.artist-link {
@@ -89,6 +97,7 @@ a.back-button {
     border: none;
     margin-right: 8px;
     margin-top: -2px;
+    height: 20px;
 
     svg {
         width: 16px;
@@ -119,14 +128,15 @@ a.back-button {
         justify-content: space-between;
         padding: 8px;
         cursor: pointer;
+
+        & > div {
+            display: flex;
+            align-items: center;
+        }
     }
 
     &:hover {
         background: $color-card-light;
-    }
-
-    span {
-        display: flex;
     }
 
     input {

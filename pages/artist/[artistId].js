@@ -6,6 +6,7 @@ import Album from "../../components/album";
 import Checkbox from "../../components/checkbox";
 import Link from "next/link";
 import Layout from "../../components/layout";
+import Head from "next/head";
 
 function Artist() {
     const router = useRouter();
@@ -21,6 +22,7 @@ function Artist() {
     const [href, setHref] = useState("");
     const [loading, setLoading] = useState(true);
     const [selectAll, setSelectAll] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -52,7 +54,7 @@ function Artist() {
                             return {
                                 name: x.name,
                                 id: x.id,
-                                image: x.images.slice(-1)[0].url,
+                                image: x.images[0].url,
                             };
                         });
 
@@ -70,7 +72,12 @@ function Artist() {
                             ]);
                         }
                     })
-                    .catch(err => console.error(err));
+                    .catch(err => {
+                        console.error(err);
+                        if (err.statusCode === 401) {
+                            signOut();
+                        }
+                    });
             }
         }
 
@@ -117,6 +124,8 @@ function Artist() {
     const createPlaylist = () => {
         console.log("createPlaylist");
 
+        setLoading(true);
+
         let playlistId;
         let uris;
         const albums = selectedAlbums.map(x => x.id);
@@ -148,6 +157,8 @@ function Artist() {
                         .catch(err => {
                             console.log(err);
                             console.error("Error adding tracks to playlist");
+                            setError(true);
+                            setLoading(false);
                         });
                 }
             })
@@ -155,17 +166,16 @@ function Artist() {
             .then(playlist => {
                 setHref(playlist.body.external_urls.spotify)
                 setPlaylistCreated(true);
+                setLoading(false);
             })
-            .catch(err => {
-                console.error(err);
-            });
+            .catch(err => {console.error(err)});
     };
 
     let list = <h4>No albums found</h4>;
     if (loading) {
         list = <h4>Loading...</h4>;
     }
-    if (albums.length > 0) {
+    if (!loading && albums.length > 0) {
         list = albums.map(a => (
             <Album
                 key={a.id}
@@ -177,6 +187,10 @@ function Artist() {
             />
         ));
     }
+    if (error) {
+        list = <h4 className="error">There was an error on Spotify's end. Try creating the playlist again.</h4>
+    }
+
 
     let content;
     let onClickBack;
@@ -246,11 +260,21 @@ function Artist() {
     }
 
     return (
+        <>
+        <Head>
+            <title>{name}'s discography</title>
+            <meta
+                name="description"
+                content="Create a playlist of an artist's entire discography - with one click"
+            />
+            <link rel="icon" href="/favicon.ico" />
+        </Head>
         <Layout pageId="artist">
             <h1 className="content">{name}</h1>
 
             {content}
         </Layout>
+        </>
     );
 }
 
