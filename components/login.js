@@ -1,5 +1,5 @@
 import React from "react";
-import { signIn, getProviders } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 function Login(props) {
 
@@ -9,14 +9,13 @@ function Login(props) {
                 <div id="login-image"></div>
 
                 <div className="content">
-                    <h1>Discograph</h1>
+                    <h1 id="app-name">Discograph</h1>
 
                     <p className="text-grey">
-                        Create a playlist of an artist's entire discography -
+                        Create a playlist of an artist&apos;s entire discography -
                         with one click
                     </p>
 
-                    {/* className="text-caps button total-center" */}
                     {Object.values(props.providers).map(p => (
                         <button
                             key={p.id}
