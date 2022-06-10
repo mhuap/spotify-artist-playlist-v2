@@ -1,0 +1,120 @@
+@use "variables" as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: $color-background-black;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+a,
+a:hover,
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+a.button,
+button {
+    width: 100%;
+    background: $color-main;
+    border-radius: 24px;
+    height: 48px;
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
+
+p {
+    letter-spacing: 0.04em;
+}
+
+header {
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 64px;
+}
+
+.background-gradient {
+    background: linear-gradient(#222222, $color-background-black);
+    height: 190px;
+    min-height: 150px;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.username {
+    // position: absolute;
+    // top: 16px;
+    // right: 16px;
+    color: $color-text-grey;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+}
+
+.sign-out {
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 8px;
+}
+
+#__next {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+h1#app-name {
+    letter-spacing: -0.04em;
+    font-size: 52px;
+    margin: 0;
+    margin-left: -2px;
+}
+
+.container {
+    max-width: 450px;
+    width: 100%;
+    background-color: none;
+}
+
+.content {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.total-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-caps {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+}
+
+.text-grey {
+    color: $color-text-grey;
+}

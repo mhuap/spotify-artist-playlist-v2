@@ -1,0 +1,153 @@
+@use "variables" as *;
+
+#artist {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.album-list {
+    padding-bottom: 80px;
+    flex-grow: 1;
+}
+
+.button.artist-link {
+    margin: 8px 0;
+    border: 2px solid $color-card-light;
+    background: $color-card-light;
+
+    &:hover {
+        background: $color-card;
+    }
+
+    img {
+        height: 24px;
+        width: 24px;
+        margin-right: 8px;
+    }
+}
+
+.artist-button {
+    bottom: 32px;
+}
+
+a.back-button {
+    bottom: 32px;
+    background: none;
+    border: 1px solid $color-main; 
+}
+
+.spotify-button {
+    bottom: 100px;
+}
+
+.artist-button,
+.spotify-button,
+.back-button {
+    position: fixed;
+    max-width: 450px;
+    width: calc(100% - 32px);
+
+    button {
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 6px 20px 4px;
+    }
+}
+
+.artist-image {
+    height: 150%;
+    width: 100%;
+    background-size: cover !important;
+    position: absolute;
+    top: -50%;
+    left: 0;
+    z-index: -1;
+}
+
+.master-checkbox {
+    margin-top: 16px;
+    cursor: pointer;
+
+    .checkbox {
+        float: left;
+        margin-left: 8px;
+    }
+
+    input {
+        margin-left: 12px;
+        margin-right: 16px;
+        display: none;
+    }
+}
+
+.checkbox {
+    background-color: $color-main;
+    padding: 2px;
+    line-height: 0;
+    border-radius: 6px;
+    color: $color-card;
+    border: none;
+    margin-right: 8px;
+    margin-top: -2px;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.unselectedAlbum {
+    color: $color-text-grey;
+
+    .checkbox {
+        background-color: transparent;
+        border: 2px solid $color-text-grey;
+        width: 8px;
+        height: 8px;
+        padding: 8px;
+    }
+}
+
+.album {
+    margin: 16px 0;
+    background: $color-card;
+    border-radius: 4px;
+
+    label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    &:hover {
+        background: $color-card-light;
+    }
+
+    span {
+        display: flex;
+    }
+
+    input {
+        display: none;
+    }
+
+    img {
+        height: 80px;
+        width: 80px;
+        margin-left: 8px;
+    }
+}
+
+#confirmation {
+    a {
+        word-wrap: break-word;
+    }
+}
+
+.spotify-button img {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+}

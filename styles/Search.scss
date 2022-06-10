@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+#search {
+
+  .welcome {
+    font-size: 32px;
+    font-weight: 700;
+
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    input {
+      background: none;
+      border: none;
+      border-bottom: 2px solid white;
+      border-radius: 4px;
+      font-size: 1rem;
+      padding: 8px;
+      color: white;
+      letter-spacing: 1px;
+      margin-top: 8px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  button {
+    display: none;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  li {
+    a {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      background: $color-card;
+      margin: 16px 0;
+      border-radius: 4px;
+
+      &:hover {
+        background: $color-card-light;
+      }
+    }
+
+    img, .artist-image {
+      height: 80px;
+      width: 80px;
+      margin-right: 16px;
+    }
+  }
+
+
+}
