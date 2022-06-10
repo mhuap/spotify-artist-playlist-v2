@@ -140,10 +140,10 @@ function Artist() {
             })
             .then(all => all.map(a => a.tracks.items).flat())
             .then(tracks => (uris = tracks.map(t => t.uri)))
-            .then(data => {
+            .then(async data => {
                 while (uris.length > 0) {
                     const batch = uris.splice(0, 50);
-                    spotifyApi
+                    await spotifyApi
                         .addTracksToPlaylist(playlistId, batch)
                         .catch(err => {
                             console.log(err);
