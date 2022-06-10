@@ -191,6 +191,7 @@ function Artist() {
                     <a
                         href={href}
                         target="_blank"
+                        rel="noreferrer"
                         className="text-caps button total-center spotify-button"
                     >
                         <img
@@ -214,7 +215,7 @@ function Artist() {
         content = (
             <>
                 <div className="content">
-                    {/* <a className="text-caps button total-center artist-link" target="_blank" href={url}>
+                    {/* <a className="text-caps button total-center artist-link" target="_blank" rel="noreferrer" href={url}>
           <img src='/images/Spotify_Icon_RGB_White.png' alt="spotify logo icon"/>
           Listen on Spotify
         </a> */}
