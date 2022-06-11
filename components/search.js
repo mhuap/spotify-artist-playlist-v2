@@ -11,7 +11,6 @@ const filler = "/images/Portrait_Placeholder.png";
 function Search() {
     const [artists, setArtists] = useState([]);
     const [artistInput, setArtistInput] = useState("");
-    const { data: session, status } = useSession();
     const spotifyApi = useSpotify();
 
     const handleSearch = e => {
@@ -34,11 +33,7 @@ function Search() {
 
                     setArtists(items);
                 })
-                .catch(err => {
-                    if (err.statusCode === 401) {
-                        signOut();
-                    }
-                });
+                .catch(err => {console.error(err)});
         }
     };
 

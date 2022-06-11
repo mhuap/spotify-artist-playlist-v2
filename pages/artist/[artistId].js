@@ -3,15 +3,15 @@ import { useRouter } from "next/router";
 import { getSession, signOut, useSession } from "next-auth/react";
 import useSpotify from "../../hooks/useSpotify";
 import Album from "../../components/album";
-import Checkbox from "../../components/checkbox";
-import Link from "next/link";
 import Layout from "../../components/layout";
 import Head from "next/head";
+import PlaylistCreated from "../../components/playlistCreated";
+import AlbumList from "../../components/albumList";
 
 function Artist() {
     const router = useRouter();
     const { artistId } = router.query;
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const spotifyApi = useSpotify();
 
     const [name, setName] = useState("");
@@ -23,6 +23,12 @@ function Artist() {
     const [loading, setLoading] = useState(true);
     const [selectAll, setSelectAll] = useState(true);
     const [error, setError] = useState(false);
+
+    const pageloading = status === "loading";
+
+    if (!session && pageLoading) {
+        return <p>Loading...</p>;
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -132,7 +138,9 @@ function Artist() {
         const artist = name;
 
         spotifyApi
-            .createPlaylist(artist + " Discography", {description: "Made by Discograph"})
+            .createPlaylist(artist + " Discography", {
+                description: "Made by Discograph",
+            })
             .then(data => (playlistId = data.body.id))
             .then(async id => {
                 let allAlbums = [];
@@ -164,11 +172,13 @@ function Artist() {
             })
             .then(data => spotifyApi.getPlaylist(playlistId))
             .then(playlist => {
-                setHref(playlist.body.external_urls.spotify)
+                setHref(playlist.body.external_urls.spotify);
                 setPlaylistCreated(true);
                 setLoading(false);
             })
-            .catch(err => {console.error(err)});
+            .catch(err => {
+                console.error(err);
+            });
     };
 
     let list = <h4>No albums found</h4>;
@@ -187,93 +197,43 @@ function Artist() {
             />
         ));
     }
+
+    let content = playlistCreated ? (
+        <PlaylistCreated href={href} />
+    ) : (
+        <AlbumList
+            selectAll={selectAll}
+            onClickMasterCheckbox={onClickMasterCheckbox}
+            selectedAlbums={selectedAlbums}
+            createPlaylist={createPlaylist}
+            albums={list}
+        />
+    );
+
     if (error) {
-        list = <h4 className="error">There was an error on Spotify's end. Try creating the playlist again.</h4>
-    }
-
-
-    let content;
-    let onClickBack;
-    if (playlistCreated) {
-        // confirmation
         content = (
-            <>
-                <div id="confirmation" className="content album-list">
-                    <h2>Playlist created</h2>
-                </div>
-                <div className="content">
-                    <a
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-caps button total-center spotify-button"
-                    >
-                        <img
-                            src="/images/Spotify_Icon_RGB_White.png"
-                            alt="spotify logo icon"
-                        />
-                        Listen on Spotify
-                    </a>
-
-                    <Link href="/">
-                        <a className="text-caps button total-center back-button">
-                            Back to search
-                        </a>
-                    </Link>
-                </div>
-            </>
+            <h4 className="error">
+                There was an error on Spotify's end. Try creating the playlist
+                again.
+            </h4>
         );
-        // onClickBack = () => setPlaylistCreated(false);
-    } else {
-        // album list
-        content = (
-            <>
-                <div className="content">
-                    {/* <a className="text-caps button total-center artist-link" target="_blank" rel="noreferrer" href={url}>
-          <img src='/images/Spotify_Icon_RGB_White.png' alt="spotify logo icon"/>
-          Listen on Spotify
-        </a> */}
-                </div>
-                <div
-                    className={
-                        "content master-checkbox" +
-                        (selectAll ? "" : " unselectedAlbum")
-                    }
-                >
-                    <label>
-                        <input
-                            type="checkbox"
-                            onChange={onClickMasterCheckbox}
-                            defaultChecked
-                        />
-                        <Checkbox checked={selectAll} />
-                        {selectedAlbums.length} selected
-                    </label>
-                </div>
-                <div className="content album-list">{list}</div>
-                <div className="content artist-button">
-                    <button onClick={createPlaylist}>Create playlist</button>
-                </div>
-            </>
-        );
-        onClickBack = () => router.back();
     }
 
     return (
         <>
-        <Head>
-            <title>{name}'s discography</title>
-            <meta
-                name="description"
-                content="Create a playlist of an artist's entire discography - with one click"
-            />
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Layout pageId="artist">
-            <h1 className="content">{name}</h1>
+            <Head>
+                <title>{name}'s discography</title>
+                <meta
+                    name="description"
+                    content="Create a playlist of an artist's entire discography - with one click"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <Layout pageId="artist">
+                <h1 className="content">{name}</h1>
 
-            {content}
-        </Layout>
+                {content}
+            </Layout>
         </>
     );
 }

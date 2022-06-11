@@ -2,10 +2,9 @@ import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 import spotifyApi from "../../../lib/spotify";
 
-const scopes = ['user-read-private',
-'user-read-email',
+const scopes = [
 'playlist-modify-public',
-'playlist-modify-private']
+]
 .join(' ')
 
 const SPOTIFY_AUTHORIZATION_URL =
@@ -25,7 +24,7 @@ async function refreshAccessToken(token) {
     return {
       ...token,
       accessToken: refreshedToken.access_token,
-      accessTokenExpires: Date.now() + refreshedToken.expires_at * 1000,
+      accessTokenExpires: refreshedToken.expires_at * 1000,
       refreshToken: refreshedToken.refresh_token ?? token.refreshToken, // Fall back to old refresh token
     }
   } catch (error) {
@@ -57,7 +56,7 @@ export default NextAuth({
       if (account && user) {
         return {
           accessToken: account.access_token,
-          accessTokenExpires: Date.now() + account.expires_at * 1000,
+          accessTokenExpires: account.expires_at * 1000,
           refreshToken: account.refresh_token,
           user,
         }
