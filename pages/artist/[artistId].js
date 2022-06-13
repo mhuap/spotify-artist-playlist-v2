@@ -28,10 +28,6 @@ function Artist() {
 
     const pageLoading = status === "loading";
 
-    if (!session && pageLoading) {
-        return <p>Loading...</p>;
-    }
-
     useEffect(() => {
         async function fetchData() {
             spotifyApi
@@ -73,12 +69,10 @@ function Artist() {
                         );
 
                         setAlbums(prevAlbums => [...prevAlbums, ...filtered]);
-                        if (selectAll) {
-                            setSelectedAlbums(prevSelected => [
-                                ...prevSelected,
-                                ...filtered,
-                            ]);
-                        }
+                        setSelectedAlbums(prevSelected => [
+                            ...prevSelected,
+                            ...filtered,
+                        ]);
                     })
                     .catch(err => {
                         console.error(err);
@@ -92,6 +86,10 @@ function Artist() {
         fetchData();
         setLoading(false);
     }, [spotifyApi, includeStr]);
+
+    if (!session && pageLoading) {
+        return <p>Loading...</p>;
+    }
 
     const select = id => {
         const albumObject = albums.filter(x => x.id === id)[0];
@@ -207,6 +205,7 @@ function Artist() {
 
         setAlbums([])
         setSelectedAlbums([])
+        setSelectAll(true)
         setIncludeStr(newStr.join(","))
     }
 
@@ -243,7 +242,7 @@ function Artist() {
     if (error) {
         content = (
             <h4 className="error">
-                There was an error on Spotify's end. Try creating the playlist
+                There was an error on Spotify&apos;s end. Try creating the playlist
                 again.
             </h4>
         );
