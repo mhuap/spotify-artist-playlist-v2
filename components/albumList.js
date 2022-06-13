@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Checkbox from "./checkbox";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
-import CheckboxSettings from "./checkboxSettings";
 import SettingOption from "./settingOption";
 
 function AlbumList({

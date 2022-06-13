@@ -26,7 +26,7 @@ function Artist() {
     const [error, setError] = useState(false);
     const [includeStr, setIncludeStr] = useState("album,compilation");
 
-    const pageloading = status === "loading";
+    const pageLoading = status === "loading";
 
     if (!session && pageLoading) {
         return <p>Loading...</p>;
