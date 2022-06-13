@@ -1,9 +1,11 @@
-import React from "react";
-import { signIn } from "next-auth/react";
+import { getProviders, signIn } from 'next-auth/react';
+import React from 'react'
+import HeadIcons from '../components/headIcons'
 
 function Login(props) {
-
-    return (
+  return (
+    <>
+        <HeadIcons title="Discograph" />
         <div className="container">
             <div id="login">
                 <div id="login-image"></div>
@@ -28,7 +30,18 @@ function Login(props) {
                 </div>
             </div>
         </div>
-    );
+    </>
+  )
 }
 
-export default Login;
+export default Login
+
+export async function getServerSideProps() {
+    const providers = await getProviders();
+
+    return {
+        props: {
+            providers,
+        },
+    };
+}

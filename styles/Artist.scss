@@ -42,11 +42,17 @@
 a.back-button {
     bottom: 32px;
     background: none;
-    border: 1px solid $color-main; 
+    border: 1px solid $color-main;
 }
 
 .spotify-button {
     bottom: 100px;
+}
+
+.spotify-button img {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
 }
 
 .artist-button,
@@ -73,7 +79,6 @@ a.back-button {
 }
 
 .master-checkbox {
-    margin-top: 16px;
     cursor: pointer;
 
     .checkbox {
@@ -82,8 +87,6 @@ a.back-button {
     }
 
     input {
-        margin-left: 12px;
-        margin-right: 16px;
         display: none;
     }
 }
@@ -156,8 +159,63 @@ a.back-button {
     }
 }
 
-.spotify-button img {
-    height: 24px;
-    width: 24px;
+.title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $color-text-grey;
+    margin-top: 16px;
+
+    .settings-icon {
+        svg {
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+            display: block;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
+
+.settings {
+    background-color: $color-card;
+    margin: 0 16px 0 16px;
+    padding: 24px;
+    overflow: hidden;
+    max-height: 500px;
+    transition: max-height 2s, padding 2s;
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    &.closed {
+        max-height: 0;
+        padding: 0 24px;
+    }
+
+    input {
+        display: none;
+    }
+}
+
+.checkbox-settings {
+    background-color: white;
+    border-radius: 4px;
+    color: $color-main;
+    border: none;
     margin-right: 8px;
+    margin-top: -2px;
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
 }

@@ -7,6 +7,7 @@ import Layout from "../../components/layout";
 import Head from "next/head";
 import PlaylistCreated from "../../components/playlistCreated";
 import AlbumList from "../../components/albumList";
+import HeadIcons from "../../components/headIcons";
 
 function Artist() {
     const router = useRouter();
@@ -23,6 +24,7 @@ function Artist() {
     const [loading, setLoading] = useState(true);
     const [selectAll, setSelectAll] = useState(true);
     const [error, setError] = useState(false);
+    const [includeStr, setIncludeStr] = useState("album,compilation");
 
     const pageloading = status === "loading";
 
@@ -46,7 +48,7 @@ function Artist() {
             while (hasMore) {
                 await spotifyApi
                     .getArtistAlbums(artistId, {
-                        include_groups: "album,compilation",
+                        include_groups: includeStr,
                         limit: 20,
                         offset: offset,
                     })
@@ -89,7 +91,7 @@ function Artist() {
 
         fetchData();
         setLoading(false);
-    }, [spotifyApi]);
+    }, [spotifyApi, includeStr]);
 
     const select = id => {
         const albumObject = albums.filter(x => x.id === id)[0];
@@ -178,10 +180,37 @@ function Artist() {
             })
             .catch(err => {
                 console.error(err);
+                if (err.statusCode == 500){
+                    setError(true);
+                    setLoading(false);
+                }
             });
     };
 
-    let list = <h4>No albums found</h4>;
+    const onChangeSettingOptions = (alb, comp, sing, app) => {
+        const newStr = []
+        if (alb) {
+            newStr.push("album")
+        }
+
+        if (comp) {
+            newStr.push("compilation")
+        }
+
+        if (sing) {
+            newStr.push("single")
+        }
+
+        if (app) {
+            newStr.push("appears_on")
+        }
+
+        setAlbums([])
+        setSelectedAlbums([])
+        setIncludeStr(newStr.join(","))
+    }
+
+    let list = <h4>No music found</h4>;
     if (loading) {
         list = <h4>Loading...</h4>;
     }
@@ -207,6 +236,7 @@ function Artist() {
             selectedAlbums={selectedAlbums}
             createPlaylist={createPlaylist}
             albums={list}
+            onChangeSettingOptions={onChangeSettingOptions}
         />
     );
 
@@ -221,14 +251,7 @@ function Artist() {
 
     return (
         <>
-            <Head>
-                <title>{name}'s discography</title>
-                <meta
-                    name="description"
-                    content="Create a playlist of an artist's entire discography - with one click"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <HeadIcons title={name + " - Discography"}/>
             <Layout pageId="artist">
                 <h1 className="content">{name}</h1>
 

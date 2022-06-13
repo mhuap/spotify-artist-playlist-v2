@@ -6,11 +6,15 @@ export async function middleware(req) {
     
     const { pathname } = req.nextUrl;
 
+    if (token && pathname === '/login') {
+        return NextResponse.redirect(new URL('/', req.url))
+    }
+
     if (pathname.includes('/api/auth') || token) {
         return NextResponse.next();
     }
 
-    if (!token && pathname != '/') {
-        return NextResponse.redirect(new URL('/', req.url))
+    if (!token && pathname != '/login') {
+        return NextResponse.redirect(new URL('/login', req.url))
     }
 }
