@@ -37,35 +37,33 @@
 
 .artist-button {
     bottom: 32px;
+    width: 100%;
+    button {
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 6px 20px 4px;
+    }
+}
+
+.created-buttons {
+    position: fixed;
+    bottom: 32px;
+    max-width: 450px;
+    width: 100%;
 }
 
 a.back-button {
-    bottom: 32px;
     background: none;
     border: 1px solid $color-main;
 }
 
-.spotify-button {
-    bottom: 100px;
+a.spotify-button {
+    margin-bottom: 16px;
 }
 
 .spotify-button img {
     height: 24px;
     width: 24px;
     margin-right: 8px;
-}
-
-.artist-button,
-.spotify-button,
-.back-button {
-    position: fixed;
-    max-width: 450px;
-    width: calc(100% - 32px);
-
-    button {
-        cursor: pointer;
-        box-shadow: rgba(0, 0, 0, 0.5) 0px 6px 20px 4px;
-    }
 }
 
 .artist-image {

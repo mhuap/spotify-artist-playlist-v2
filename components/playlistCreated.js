@@ -7,7 +7,7 @@ function PlaylistCreated({ href }) {
             <div id="confirmation" className="content album-list">
                 <h2>Playlist created</h2>
             </div>
-            <div className="content">
+            <div className="content created-buttons">
                 <a
                     href={href}
                     target="_blank"
