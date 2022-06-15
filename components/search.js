@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 // import filler from "../images/Portrait_Placeholder.png";
 import useSpotify from "../hooks/useSpotify";
 import Layout from "./layout";
+import debounce from 'lodash.debounce';
 
 const filler = "/images/Portrait_Placeholder.png";
 
@@ -33,13 +34,25 @@ function Search() {
 
                     setArtists(items);
                 })
-                .catch(err => {console.error(err)});
+                .catch(err => {
+                    console.error(err);
+                });
         }
     };
 
     const handleArtistInputChange = e => {
         setArtistInput(e.target.value);
     };
+
+    const debouncedResults = useMemo(() => {
+        return debounce(handleSearch, 200);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            debouncedResults.cancel();
+        };
+    });
 
     let list = null;
     if (artists.length > 0) {
@@ -62,7 +75,7 @@ function Search() {
                     <input
                         type="text"
                         name="artist"
-                        onChange={handleSearch}
+                        onChange={debouncedResults}
                         placeholder="Search for an artist"
                         required
                     />
