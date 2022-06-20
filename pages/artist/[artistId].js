@@ -236,6 +236,7 @@ function Artist() {
             createPlaylist={createPlaylist}
             albums={list}
             onChangeSettingOptions={onChangeSettingOptions}
+            url={url}
         />
     );
 

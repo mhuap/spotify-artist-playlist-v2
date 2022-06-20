@@ -9,7 +9,8 @@ function AlbumList({
     selectedAlbums,
     createPlaylist,
     albums,
-    onChangeSettingOptions
+    onChangeSettingOptions,
+    url
 }) {
     const [openSettings, setOpenSettings] = useState(false);
     const [albumOption, setAlbumOption] = useState(true);
@@ -27,7 +28,7 @@ function AlbumList({
 
     return (
         <>
-            {/* <div className="content">
+            <div className="content">
                 <a
                     className="text-caps button total-center artist-link"
                     target="_blank"
@@ -40,7 +41,7 @@ function AlbumList({
                     />
                     Listen on Spotify
                 </a>
-            </div> */}
+            </div>
             <div className="content title-bar">
                 <div
                     className={
